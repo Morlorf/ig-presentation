@@ -22,7 +22,7 @@ We organized the code into domain folders: environment, rides, people, controls,
 
 **P2:** Let me highlight three hard problems.
 
-First, the **water shader**. The river uses a vertex shader summing four Gerstner waves — crests sharpen naturally and the lighting reacts to every ripple. Normals are computed analytically from partial derivatives, with noise-based caustics flowing over the riverbed.
+First, the **water shader**. The river uses a vertex shader summing four sine waves — each with different wavelength, direction, and speed, and the lighting reacts to every ripple. Normals are computed analytically from partial derivatives, with noise-based caustics flowing across the water surface.
 
 Second, the **roller coaster track**. It's a CatmullRom spline extracted automatically from the rail-tube mesh. We use a rotation-minimizing frame — unlike Frenet, it doesn't flip at inflection points — and the train speed follows a conservation-of-energy model: accelerates downhill, slows uphill.
 
@@ -38,9 +38,9 @@ For lighting: the sun and moon orbit on a celestial sphere; the sky crossfades f
 
 **P1:** *(at the demo)* Let's try it out.
 
-As you can see, the park has 4 rides, a train running around the perimeter, and 3 balloons in the sky.
+As you can see, the scene loads with the full park in view.
 
-To move around, click where you want to go — click-to-fly. *(clicks on the ground)* The camera flies there in about 1.2 seconds using Tween.js with a custom easing curve.
+To move around, click where you want to go — click-to-fly. *(clicks on the ground)* The camera flies there in about 1.2 seconds using Tween.js with a standard cubic easing curve.
 
 Lampposts are clickable *(clicks a lamppost)*: Auto, On, Off. They turn on automatically at sunset, but you can override them manually.
 
