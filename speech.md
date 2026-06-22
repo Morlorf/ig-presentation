@@ -4,7 +4,7 @@
 
 ## Part 1 — Opening (P1)
 
-**P1:** So, our project is *LunaPark*, an interactive 3D amusement park built with Three.js.
+**P1:** Our project is *LunaPark*, an interactive 3D amusement park built with Three.js.
 
 Let's open the site. *(clicks the link)*
 
@@ -16,30 +16,21 @@ The park has 4 rides, a panoramic train, 3 hot air balloons, and a shooting gall
 
 **P1:** This is the project structure. *(slide with tree)*
 
-We organized the code into folders by domain:
-- `src/environment/` — the scenery: ground, sky, river, vegetation, benches, food stalls, fireworks.
-- `src/rides/` — the rides: each one is a separate component with its own animation.
-- `src/people/` — the NPCs walking around the park and ride passengers.
-- `src/controls/` — navigation and interaction: click-to-fly, raycasting, camera switching.
-- `src/ui/` — the HUD and control panels.
-- `src/lighting/` — lighting and day/night cycle.
-- `src/utils/` — various utilities.
+We organized the code into domain folders: environment, rides, people, controls, lighting, UI.
 
-The bulk of it is in `App.js`: it creates the scene, the renderer, and wires everything together. Each component updates itself in the animation loop and communicates through an event system.
+`App.js` creates the scene and the renderer with post-processing — UnrealBloomPass for the night glow — and wires everything together in the animation loop. Components communicate through an event bus.
 
-**P2:** *(next slides)* Let's go into the individual files.
+**P2:** Let me highlight three hard problems.
 
-Starting with `App.js`: here we initialize the Three.js scene, the renderer with post-processing — we used Three.js's bloom effect for the night lights — and mount everything.
+First, the **water shader**. The river uses a vertex shader summing four Gerstner waves — crests sharpen naturally and the lighting reacts to every ripple. Normals are computed analytically from partial derivatives, with noise-based caustics flowing over the riverbed.
 
-For the environment: `Sky.js` handles the transition between day, night, sunrise and sunset. The textures are HDR images from Polyhaven, and the transition is an interpolation between the four textures based on the sun's position. `Water.js` animates the river with a custom vertex shader for wave motion, plus foam and caustics effects. `Fireworks.js` generates fireworks with a particle system — each particle has its own position, velocity, and color, updated frame by frame.
+Second, the **roller coaster track**. It's a CatmullRom spline extracted automatically from the rail-tube mesh. We use a rotation-minimizing frame — unlike Frenet, it doesn't flip at inflection points — and the train speed follows a conservation-of-energy model: accelerates downhill, slows uphill.
 
-For interaction: `CameraManager.js` manages the camera — orbit, click-to-fly, first-person on rides, and 6 fixed positions triggered by keyboard. `InteractionManager.js` does raycasting: it casts a ray from the mouse position and checks if it hits interactive objects like lampposts or rides.
+Third, the **NPC gait**. Each visitor pathfinds with A* on a navigation grid and smooths paths with string-pulling. The walk is procedural: each foot slides backward at walking speed — zero foot-skate — with two-bone IK solving the knee.
 
-For the rides: they all extend `RideBase.js`, which handles start, stop, and the base animation loop. Then each one specializes. The *Coaster* moves along a spline curve — a curve that passes through control points — and the speed varies with height, like a real roller coaster. The *FerrisWheel* has gondolas on a separate group that counter-rotates to keep them upright. The *Carousel* animates the horses with a wave motion, each one phase-shifted from the others. The *Balloons* drift with the wind, which is adjustable.
+The rides all extend `RideBase.js`. The FerrisWheel counter-rotates each gondola with quaternion multiplication. The Carousel drives horses with phase-shifted sine waves. The Balloons drift with adjustable wind. Fireworks use GPU particles: 5000 per burst in the vertex shader.
 
-For the NPCs: `Visitors.js` handles pathfinding. Each visitor has a destination, computes the shortest path on a grid representing the park, and walks along it. The walking animation is procedural: a gait engine with Fourier-series kinematics and two-bone IK.
-
-For lighting: `DayNightCycle.js` simulates the solar cycle — the sun and moon rotate on an orbit, the lighting changes, and at sunset the lampposts turn on automatically. You can also override them manually: Auto, always on, or always off.
+For lighting: the sun and moon orbit on a celestial sphere; the sky crossfades four HDR textures via GLSL mixing. At sunset, lampposts switch to Auto — overridable to On or Off.
 
 ---
 
@@ -49,7 +40,7 @@ For lighting: `DayNightCycle.js` simulates the solar cycle — the sun and moon 
 
 As you can see, the park has 4 rides, a train running around the perimeter, and 3 balloons in the sky.
 
-To move around, you click where you want to go — click-to-fly. *(clicks on the ground)* The camera flies toward the point — the transition is handled with Tween.js, which interpolates position and target in about 1.2 seconds with an easing that smooths the arrival.
+To move around, click where you want to go — click-to-fly. *(clicks on the ground)* The camera flies there in about 1.2 seconds using Tween.js with a custom easing curve.
 
 Lampposts are clickable *(clicks a lamppost)*: Auto, On, Off. They turn on automatically at sunset, but you can override them manually.
 
@@ -87,7 +78,7 @@ The track is automatically extracted from the GLB rail-tube mesh — each ring y
 
 The **Tagada**. *(clicks button)*
 
-It combines multiple simultaneous movements: the platform rotates and bounces rhythmically, giving that signature bouncing feel of this ride.
+It combines six simultaneous movements: the platform spins, the arm yaws, pitches, and rolls, the ride bounces on two axes, and the arm telescopes outward — giving it that signature chaotic feel.
 
 *[P2 exits]*
 
@@ -101,7 +92,7 @@ You have 30 seconds to hit as many targets as possible. Close targets are slower
 
 *(shoots a few times)*
 
-Each click uses raycasting: a ray fires from the crosshair and checks if it hits a target. It's immediate and doesn't need physics simulation.
+Each click fires a ray from the crosshair using raycasting — instant hit detection, no physics engine needed.
 
 To exit, `ESC`.
 
@@ -118,6 +109,6 @@ To exit, `ESC`.
 - FPS timed shooting gallery
 - Bloom effect for night lighting
 
-**P2:** All built with Three.js and WebGL 2.0, imported 3D models, PBR textures, and HDR skyboxes. All animations are procedural — no pre-loaded animation clips — including the NPC passengers riding along on every attraction.
+**P2:** Built with WebGL 2.0 and ACES Filmic tone mapping, imported 3D models with PBR textures, and HDR skyboxes. All animations are procedural — no pre-loaded animation clips — including the NPC passengers riding along on every attraction.
 
 **P1:** That's it.
