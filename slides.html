@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LunaPark — Presentazione</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0d14;
+  color: #e8eaed;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#presentation {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 6vw;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slide-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  margin-bottom: 0.8em;
+  color: #ffa01c;
+}
+
+h3 {
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  color: #ffa01c;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  color: #9aa0a6;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+ul { list-style: none; padding: 0; }
+
+li {
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  line-height: 1.7;
+  padding-left: 1.2em;
+  position: relative;
+}
+
+li::before {
+  content: "•";
+  color: #ffa01c;
+  position: absolute;
+  left: 0;
+}
+
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3vw;
+  align-items: start;
+}
+
+.cols-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2vw;
+  align-items: start;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.gif-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #1a1d24;
+  border: 2px dashed #3a3d44;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  color: #5a5d64;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0.5rem;
+}
+
+#nav {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a3d44;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.nav-dot.active { background: #ffa01c; }
+
+#slide-counter {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 0.9rem;
+  color: #5a5d64;
+  font-variant-numeric: tabular-nums;
+  z-index: 100;
+}
+
+.slide-center { text-align: center; }
+
+.slide-center ul {
+  display: inline-block;
+  text-align: left;
+}
+
+.accent-line {
+  width: 60px;
+  height: 3px;
+  background: #ffa01c;
+  margin: 0.8rem auto;
+  border-radius: 2px;
+}
+
+.demo-tag {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.8rem;
+  border: 2px solid #ffa01c;
+  border-radius: 50px;
+  color: #ffa01c;
+  font-size: clamp(1rem,1.5vw,1.2rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.spacer { height: 1rem; }
+
+.mt-1 { margin-top: 0.6rem; }
+
+.fw-bold { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div id="presentation">
+
+<!-- Slide 1: Title -->
+<div class="slide active" data-index="0">
+  <div class="slide-content slide-center">
+    <h1>LUNAPARK</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle" style="font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:2rem;">
+      Interactive 3D Amusement Park
+    </p>
+    <p class="subtitle">Three.js · WebGL 2.0</p>
+    <p class="subtitle" style="margin-top:0.3rem;">Enrico Battistoni · Davide De Blasio</p>
+  </div>
+</div>
+
+<!-- Slide 2: Overview -->
+<div class="slide" data-index="1">
+  <div class="slide-content">
+    <h2>THE PARK</h2>
+    <div class="cols-2">
+      <div>
+        <ul>
+          <li>4 rides — Ferris Wheel · Carousel · Coaster · Tagada</li>
+          <li>Panoramic train circling the park</li>
+          <li>3 hot air balloons (wind drift)</li>
+          <li>Shooting gallery (FPS timed)</li>
+          <li>Click-to-fly navigation</li>
+          <li>First-person view on rides</li>
+        </ul>
+      </div>
+      <div>
+        <div class="gif-placeholder">
+          GIF: 01-park-establishing.mp4
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: Architecture -->
+<div class="slide" data-index="2">
+  <div class="slide-content">
+    <h2>CODE STRUCTURE</h2>
+    <ul>
+      <li>Domain folders: <strong>environment/</strong> · <strong>rides/</strong> · <strong>people/</strong> · <strong>controls/</strong> · <strong>lighting/</strong> · <strong>ui/</strong></li>
+      <li class="mt-1"><strong>App.js</strong> — scene, renderer, post-processing (UnrealBloomPass), animation loop</li>
+      <li><strong>EventBus</strong> — pub/sub communication between components</li>
+      <li>No build step — vanilla ES modules + importmap</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Slide 4: 3 Hard Problems -->
+<div class="slide" data-index="3">
+  <div class="slide-content">
+    <h2>THREE HARD PROBLEMS</h2>
+    <div class="cols-3">
+      <div class="col" style="text-align:center;">
+        <h3>Water Shader</h3>
+        <ul style="font-size:clamp(0.75rem,1.2vw,0.95rem);">
+          <li>4 Gerstner waves summed in vertex shader</li>
+          <li>Analytical normals from partial derivatives</li>
+          <li>Noise-based caustics on surface</li>
+          <li>Lighting reacts to every ripple</li>
+        </ul>
+        <div class="gif-placeholder" style="margin-top:0.4rem;">
+          GIF: 02-waves.mp4
+        </div>
+      </div>
+      <div class="col" style="text-align:center;">
+        <h3>Coaster Track</h3>
+        <div class="spacer"></div>
+        <ul style="font-size:clamp(0.75rem,1.2vw,0.95rem);margin-top:0.2rem;">
+          <li>CatmullRom spline from rail-tube mesh</li>
+          <li>Rotation-minimizing frame (unlike Frenet, no flip at inflection)</li>
+          <li>Energy-conservation speed model</li>
+          <li>Sideways banking on curves</li>
+        </ul>
+      </div>
+      <div class="col" style="text-align:center;">
+        <h3>NPC Gait</h3>
+        <div class="spacer"></div>
+        <ul style="font-size:clamp(0.75rem,1.2vw,0.95rem);margin-top:0.2rem;">
+          <li>A* pathfinding on navigation grid</li>
+          <li>String-pulling path smoothing</li>
+          <li>Zero foot-skate (foot slides backward at walk speed)</li>
+          <li>2-bone IK solving the knee</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 5: Rides & Lighting -->
+<div class="slide" data-index="4">
+  <div class="slide-content">
+    <h2>RIDES &amp; LIGHTING</h2>
+    <div class="cols-2">
+      <div>
+        <h3>Ride System</h3>
+        <ul>
+          <li>All rides extend <strong>RideBase.js</strong></li>
+          <li>State: <strong>start()</strong> / <strong>stop()</strong> / <strong>toggle()</strong></li>
+          <li>Speed ramping via <strong>tickSpeed()</strong> + ControlPanel</li>
+          <li>Bloom layers via <strong>applyBloomLayers()</strong></li>
+          <li>EventBus listeners for cross-component events</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Lighting</h3>
+        <ul>
+          <li>Sun &amp; moon orbit on celestial sphere</li>
+          <li>Sky: 4 HDR textures crossfaded via GLSL mixing</li>
+          <li>Lampposts: Auto / On / Off — clickable, automatic at sunset</li>
+        </ul>
+        <div class="gif-placeholder" style="margin-top:0.6rem;">
+          GIF: 03-fireworks.mp4
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Demo Navigation -->
+<div class="slide" data-index="5">
+  <div class="slide-content">
+    <h2>CONTROLS</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5vw;margin-bottom:1.2rem;">
+      <div class="gif-placeholder">GIF: 04-click-fly.mp4</div>
+      <div class="gif-placeholder">GIF: 05-lamppost-toggle.mp4</div>
+      <div class="gif-placeholder">GIF: 06-space-pause.mp4</div>
+    </div>
+    <ul>
+      <li><strong>Click-to-fly</strong> — Tween.js, standard cubic easing, ~1.2s</li>
+      <li>Keys <strong>1–6</strong>: fixed camera angles</li>
+      <li><strong>Space</strong>: pause day/night cycle (lighting freezes)</li>
+      <li><strong>F</strong>: trigger fireworks</li>
+      <li>Clickable lampposts (Auto/On/Off) and ride control panels (toggle on/off)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Slide 7: Ferris + Carousel -->
+<div class="slide" data-index="6">
+  <div class="slide-content">
+    <h2>FERRIS WHEEL &amp; CAROUSEL</h2>
+    <div class="cols-2">
+      <div>
+        <h3>Ferris Wheel</h3>
+        <div class="gif-placeholder">GIF: 07-ferris-fpv.mp4</div>
+        <ul class="mt-1">
+          <li>Each gondola in a separate group</li>
+          <li>Group counter-rotates to cancel wheel rotation</li>
+          <li>Solved with quaternion multiplication</li>
+          <li>Passengers stay upright</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Carousel</h3>
+        <div class="gif-placeholder">GIF: 08-carousel-fpv.mp4</div>
+        <ul class="mt-1">
+          <li>Each horse has unique phase offset</li>
+          <li>Phase-shifted sine waves</li>
+          <li>Creates a traveling wave effect around the carousel</li>
+          <li>Up/down animation per horse</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 8: Coaster + Tagada -->
+<div class="slide" data-index="7">
+  <div class="slide-content">
+    <h2>ROLLER COASTER &amp; TAGADA</h2>
+    <div class="cols-2">
+      <div>
+        <h3>Roller Coaster</h3>
+        <div class="gif-placeholder">GIF: 09-coaster-fpv.mp4</div>
+        <ul class="mt-1">
+          <li>Track extracted from GLB rail-tube mesh rings</li>
+          <li>Each ring → control point on CatmullRom spline</li>
+          <li>Rotation-minimizing frame → no flipping</li>
+          <li>Train speed: <span class="fw-bold">accelerates downhill, slows uphill</span></li>
+          <li>Sideways banking on curves</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Tagada</h3>
+        <div class="gif-placeholder">GIF: 10-tagada-fpv.mp4</div>
+        <ul class="mt-1">
+          <li>6 simultaneous movements:</li>
+          <li>Platform spins · arm yaws</li>
+          <li>Arm pitches · arm rolls</li>
+          <li>Bounces on 2 axes · arm telescopes outward</li>
+          <li>Signature chaotic feel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 9: Shooting Gallery -->
+<div class="slide" data-index="8">
+  <div class="slide-content">
+    <h2>SHOOTING GALLERY</h2>
+    <div class="cols-2">
+      <div>
+        <ul>
+          <li><strong>T</strong> — enter aiming mode (first-person + crosshair)</li>
+          <li>30-second timer</li>
+          <li>Raycasting from crosshair — instant hit detection, no physics</li>
+          <li>Close targets: slower movement, fewer points</li>
+          <li>Far targets: faster movement, more points</li>
+          <li><strong>ESC</strong> — exit aiming mode</li>
+        </ul>
+      </div>
+      <div>
+        <div class="gif-placeholder">GIF: 11-shooting-gallery.mp4</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 10: Closing -->
+<div class="slide" data-index="9">
+  <div class="slide-content slide-center">
+    <h2 style="text-align:center;">SUMMARY</h2>
+    <div class="accent-line"></div>
+    <ul style="font-size:clamp(1rem,1.6vw,1.3rem);max-width:700px;">
+      <li>Dynamic 3D scene with day/night cycle</li>
+      <li>4 rides + panoramic train + balloons + shooting gallery</li>
+      <li>NPCs with A* pathfinding and procedural walking</li>
+      <li>Click-to-fly · FPS timed shooting</li>
+      <li>UnrealBloomPass + ACES Filmic tone mapping</li>
+    </ul>
+    <p class="subtitle" style="margin-top:1.2rem;">
+      Built with WebGL · PBR textures · HDR skies
+    </p>
+    <p class="subtitle">
+      All animations procedural — no pre-loaded clips
+    </p>
+    <p class="subtitle" style="margin-top:0.3rem;">
+      NPC passengers ride along on every attraction
+    </p>
+    <div class="demo-tag">→ LIVE DEMO ←</div>
+  </div>
+</div>
+
+</div>
+
+<div id="nav"></div>
+<div id="slide-counter">1 / 10</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let current = 0;
+
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[index].classList.add('active');
+  document.getElementById('slide-counter').textContent = `${index + 1} / ${totalSlides}`;
+  document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+}
+
+function nextSlide() {
+  if (current < totalSlides - 1) {
+    current++;
+    showSlide(current);
+  }
+}
+
+function prevSlide() {
+  if (current > 0) {
+    current--;
+    showSlide(current);
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    prevSlide();
+  }
+});
+
+// Build navigation dots
+const nav = document.getElementById('nav');
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => {
+    current = i;
+    showSlide(current);
+  });
+  nav.appendChild(dot);
+}
+
+// Touch/swipe support
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+document.addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) nextSlide();
+    else prevSlide();
+  }
+});
+</script>
+
+</body>
+</html>
