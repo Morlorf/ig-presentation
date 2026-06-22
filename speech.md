@@ -54,6 +54,8 @@ Keys `1` through `6` each offer a fixed camera angle.
 
 `F` triggers fireworks. *(presses F)*
 
+**P2:** You can also see the panoramic train circling the park and the three hot air balloons drifting with the wind.
+
 Now let's get on the rides. The bar at the bottom has the ride buttons *(points at the hotbar)*: click one and you go into first-person view on that ride.
 
 *[P2 gets on the Ferris Wheel]*
@@ -109,6 +111,6 @@ To exit, `ESC`.
 - FPS timed shooting gallery
 - Bloom effect for night lighting
 
-**P2:** Built with WebGL 2.0 and ACES Filmic tone mapping, imported 3D models with PBR textures, and HDR skyboxes. All animations are procedural — no pre-loaded animation clips — including the NPC passengers riding along on every attraction.
+**P2:** Built with WebGL and ACES Filmic tone mapping, imported 3D models with PBR textures, and HDR skyboxes. All animations are procedural — no pre-loaded animation clips — including the NPC passengers riding along on every attraction.
 
 **P1:** That's it.
